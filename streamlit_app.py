@@ -24,7 +24,6 @@ fruits_to_show = my_fruit_list.loc[fruit_selected]
 #display table on the page
 streamlit.dataframe(fruits_to_show)
 
-
 #repeatable code block
 def get_fruityvice_data(this_fruit_choice):
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
@@ -44,6 +43,11 @@ try:
 except URLError as e:
   streamlit.error()
 
+#allow end user to add fruit to the list
+
+streamlit.write('Thanks for adding:', add_my_fruit)
+
+
 streamlit.header("The fruit load list contains:")
 #Snowflake related functions
 def get_fruit_load_list():
@@ -52,6 +56,16 @@ def get_fruit_load_list():
         return my_cur.fetchall()
     
 #add button to load the fruit
+def insert_row_snowflake(new_fruit):
+    with my_cnx.curosr() as my_cur:
+        my_cur.execute("insert into fruit_load_list values ('my streamlit')")
+        return 'Thanks for adding:' + new_fruit
+    
+add_my_fruit = streamlit.text_input("What fruit would you like add?")
+if streamlit.button('Add a Fruit to the List'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    snowflake_return = insert_row_snowflake(add_my_fruit)
+    
 if streamlit.button('Get Fruit Load List'):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     my_data_rows = get_fruit_load_list()
@@ -60,15 +74,3 @@ if streamlit.button('Get Fruit Load List'):
 #stop running while troubleshooting
 streamlit.stop()
 
- 
-
-
-
-
-
-#allow end user to add fruit to the list
-add_my_fruit = streamlit.text_input("What fruit would you like add?")
-streamlit.write('Thanks for adding:', add_my_fruit)
-
-
-my_cur.execute("insert into fruit_load_list values ('my streamlit')")
