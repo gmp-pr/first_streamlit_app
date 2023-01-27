@@ -31,7 +31,7 @@ def get_fruityvice_data(this_fruit_choice):
     return fruityvice_normalized
 
 #New section to display fruity advice
-streamlit.header('Fruityvice Fruit Advice')
+streamlit.header('🍒 Fruityvice Fruit Advice 🍒')
 try:
   fruit_choice = streamlit.text_input('What fruit would you like information about?')
   streamlit.caption('information source: https://fruityvice.com/')
@@ -44,7 +44,7 @@ try:
 except URLError as e:
   streamlit.error()
 
-streamlit.header("View Our Fruit List - Add Your Favorites!")
+streamlit.header('📃 View Our Fruit List - Add Your Favorites! 🌟')
 
 #Snowflake related functions
 def get_fruit_load_list():
