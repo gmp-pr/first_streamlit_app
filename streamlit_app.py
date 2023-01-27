@@ -52,7 +52,7 @@ def get_fruit_load_list():
         my_cur.execute("select * from fruit_load_list")
         return my_cur.fetchall()
 
-col1, col2 = streamlit.column(2)
+col1, col2 = streamlit.columns(2)
 
 with col1:
     #add button to load the fruit
